@@ -1,0 +1,67 @@
+---
+title: "Exercise 3 - Short- and Long-run Paid Search Advertising Response"
+author: "Purple Team: Gary Shao, Margot Zhang, Jeff Pan, Sylvia Shou, Aakanksha Baid"
+date: "October 13, 2019"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+[TODO: Overview of the analysis.]
+
+```{r}
+# Clear All Variables & Clear the Screen
+rm(list=ls())
+cat("\014")
+
+# Read in the Data
+data.adv = read.csv("Ex3_Data_R.csv")
+
+# Explore the data
+str(data.adv)
+summary(data.adv)
+
+# Prepare the data
+data.adv$logVisitors <- log(data.adv$Visitors)
+data.adv$logTotal.Spent <- log(data.adv$Total.Spent)
+data.adv$sqVisitors <- (data.adv$Visitors)^2
+summary(data.adv)
+```
+
+## Short-run Response
+
+This section shows the analysis of short-run response of clicks to advertising. 
+
+(a) 
+i. Simple linear
+```{r}
+lm.modelSL <- lm(Total.Spent ~ Visitors,data = data.adv)
+summary(lm.modelSL)
+betaSL = lm.modelSL$coefficients[2]
+meanA = mean(data.adv$Visitors)
+meanS = mean(data.adv$Total.Spent)
+aeSL = betaSL*meanA/meanS
+aeSL
+```
+
+ii Concave logarithmic
+```{r}
+lm.modelCL <- lm(Total.Spent ~ logVisitors, data = data.adv)
+summary(lm.modelCL)
+```
+
+iii. Concave quadratic
+```{r}
+lm.modelCQ <- lm(Total.Spent ~ Visitors + sqVisitors, data = data.adv )
+summary(lm.modelCQ)
+```
+
+(b)
+```{r}
+
+```
+
